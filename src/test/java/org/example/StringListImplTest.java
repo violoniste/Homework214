@@ -253,4 +253,16 @@ class StringListImplTest {
         Assertions.assertEquals(array[1], ITEM2);
         Assertions.assertEquals(array[2], ITEM3);
     }
+
+    @Test
+    void shouldThrowNullPointerException() {
+        Assertions.assertThrows(NullPointerException.class, () -> out.add(null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.add(2, null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.set(2, null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.remove(null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.contains(null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.indexOf(null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.lastIndexOf(null));
+        Assertions.assertThrows(NullPointerException.class, () -> out.equals(null));
+    }
 }

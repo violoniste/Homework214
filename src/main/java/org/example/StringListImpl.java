@@ -9,6 +9,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public String add(String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         if (size == list.length)
             grow();
 
@@ -24,6 +27,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public String add(int index, String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         if (index >= size)
             throw new IndexOutOfBoundsException();
 
@@ -43,6 +49,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public String set(int index, String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         if (index >= size)
             throw new IndexOutOfBoundsException();
 
@@ -53,6 +62,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public String remove(String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         int index = indexOf(item);
         if (index == -1)
             throw new NotFoundException();
@@ -84,6 +96,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public boolean contains(String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         for (String s : list) {
             if (s != null && s.equals(item))
                 return true;
@@ -93,6 +108,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public int indexOf(String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         for (int i = 0; i < list.length; i++) {
             if (list[i] != null && list[i].equals(item))
                 return i;
@@ -102,6 +120,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public int lastIndexOf(String item) {
+        if (item == null)
+            throw new NullPointerException();
+
         for (int i = list.length - 1; i >= 0; i--) {
             if (list[i] != null && list[i].equals(item))
                 return i;
