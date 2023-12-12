@@ -4,11 +4,14 @@ import java.util.Arrays;
 
 public class IntegerListImpl implements IntegerList {
 
-    private Integer[] list = new Integer[1];
+    private Integer[] list;
     private int size = 0;
 
-    public void testSorting() {
+    public IntegerListImpl(int initSize) {
+        list = new Integer[initSize];
+    }
 
+    public void testSorting() {
         Integer[] testList = new Integer[100000];
         for (int i = 0; i < testList.length; i++) {
             testList[i] = Math.toIntExact(Math.round(Math.random() * 10000000));
@@ -50,7 +53,7 @@ public class IntegerListImpl implements IntegerList {
     }
 
     private void grow() {
-        list = Arrays.copyOf(list, list.length * 2);
+        list = Arrays.copyOf(list, (int) (list.length * 1.5f));
     }
 
     @Override
@@ -127,8 +130,8 @@ public class IntegerListImpl implements IntegerList {
         if (item == null)
             throw new NullPointerException();
 
-        Integer[] arr = Arrays.copyOf(list, list.length);
-        sortInsertion(arr);
+        Integer[] arr = Arrays.copyOf(list, size);
+        quickSort(arr, 0, size - 1);
 
         int min = 0;
         int max = arr.length - 1;
@@ -175,6 +178,9 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer get(int index) {
+        if (index >= size)
+            throw new IndexOutOfBoundsException();
+
         return list[index];
     }
 
@@ -186,7 +192,7 @@ public class IntegerListImpl implements IntegerList {
         if (size != otherList.size())
             return false;
 
-        for (int i = 0; i < list.length; i++) {
+        for (int i = 0; i < size; i++) {
             Integer item = list[i];
             Integer other = otherList.get(i);
             if (item != null && other != null && !item.equals(other))
@@ -221,7 +227,7 @@ public class IntegerListImpl implements IntegerList {
         for (int i = 0; i < list.length - 1; i++) {
             for (int j = 0; j < list.length - 1 - i; j++) {
                 if (list[j] > list[j + 1]) {
-                    swapElements(j, j + 1);
+                    swapElements(list, j, j + 1);
                 }
             }
         }
@@ -235,12 +241,12 @@ public class IntegerListImpl implements IntegerList {
                     minElementIndex = j;
                 }
             }
-            swapElements(i, minElementIndex);
+            swapElements(list, i, minElementIndex);
         }
     }
 
     private void sortInsertion(Integer[] list) {
-        for (int i = 1; i < list.length; i++) {
+        for (int i = 1; i < size; i++) {
             int temp = list[i];
             int j = i;
             while (j > 0 && list[j - 1] >= temp) {
@@ -251,9 +257,34 @@ public class IntegerListImpl implements IntegerList {
         }
     }
 
-    void swapElements(int indexA, int indexB) {
-        int tmp = list[indexA];
-        list[indexA] = list[indexB];
-        list[indexB] = tmp;
+    private void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
     }
 }

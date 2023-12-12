@@ -14,7 +14,7 @@ class IntegerListImplTest {
 
     @BeforeEach
     void setUp() {
-        out = new IntegerListImpl();
+        out = new IntegerListImpl(4);
     }
 
     @Test
@@ -172,7 +172,7 @@ class IntegerListImplTest {
         out.add(ITEM2);
         out.add(ITEM3);
 
-        IntegerList other = new IntegerListImpl();
+        IntegerList other = new IntegerListImpl(4);
         other.add(ITEM1);
         other.add(ITEM2);
         other.add(ITEM3);
@@ -187,7 +187,7 @@ class IntegerListImplTest {
         out.add(ITEM2);
         out.add(ITEM3);
 
-        IntegerList other = new IntegerListImpl();
+        IntegerList other = new IntegerListImpl(4);
         other.add(ITEM1);
         other.add(ITEM3);
 
@@ -201,7 +201,7 @@ class IntegerListImplTest {
         out.add(ITEM2);
         out.add(ITEM3);
 
-        IntegerList other = new IntegerListImpl();
+        IntegerList other = new IntegerListImpl(4);
         other.add(ITEM1);
         other.add(ITEM3);
         other.add(ITEM2);
